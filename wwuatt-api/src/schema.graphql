@@ -1,5 +1,5 @@
 type Movie {
-  name: String!
+  title: String!
   imdb: String!
 }
 
@@ -8,5 +8,5 @@ type Query {
 }
 
 type Mutation {
-  createMovie(name: String!, imdb: String!): Movie!
+  createMovie(title: String!, imdb: String!): Movie!
 }
