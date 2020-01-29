@@ -1,22 +1,20 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import axios from 'axios';
+import { serviceUrl } from '../../env.json';
 
 @Resolver()
 export class MoviesResolver {
-  moviesMock = [
-    { id: 0, name: 'Os imprestaveis', description: 'Aquele filme que todo mundo impresta para todo mundo.' },
-    { id: 0, name: 'Afenzas Famuezas', description: 'Of c* is Rol*.' },
-  ];
 
   @Query()
-  movies() {
-    return this.moviesMock;
+  async movies() {
+    const res = await axios.get(`${serviceUrl}/movies`);
+    return res.data;
   }
 
   @Mutation()
-  createMovie(@Args('name') name: string, @Args('description') description: string) {
-    const id = this.moviesMock.length;
-    const newMovie = { id, name, description };
-    this.moviesMock.push(newMovie);
-    return newMovie;
+  async createMovie(@Args('name') name: string, @Args('imdb') imdb: string) {
+    const newMovie = { name, imdb };
+    const res = await axios.post(`${serviceUrl}/movies`, newMovie);
+    return res.data;
   }
 }

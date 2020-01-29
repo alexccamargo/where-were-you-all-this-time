@@ -17,7 +17,8 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "functions:deploy": "firebase deploy --only functions"
   },
   "dependencies": {
     "@nestjs/common": "^6.10.14",
@@ -25,6 +26,7 @@
     "@nestjs/graphql": "^6.5.3",
     "@nestjs/platform-express": "^6.10.14",
     "apollo-server-express": "^2.9.16",
+    "axios": "^0.19.2",
     "graphql": "^14.6.0",
     "graphql-tools": "^4.0.6",
     "reflect-metadata": "^0.1.13",
