@@ -1,42 +1,42 @@
-import admin from "firebase-admin";
+import "reflect-metadata";
 import { https } from "firebase-functions";
 import express from "express";
-import { ApolloServer, gql } from "apollo-server-express";
+import { ApolloServer } from "apollo-server-express";
 
+import { buildSchema } from "type-graphql";
+import { MovieResolver } from "./resolver/movie.resolver";
 
-admin.initializeApp();
+import admin from "firebase-admin";
 
-// const credentials = require('../../../firebase-credential.json');
-// const env = require('../../../env.json');
+function initDb () {
+  admin.initializeApp();
+              
+  // const credentials = require('../../../firebase-credential.json');
+  // const env = require('../../../env.json');
+  
+  // admin.initializeApp({
+  //     credential: admin.credential.cert(credentials),
+  //     databaseURL: env.databaseUrl
+  // });
+};
 
-// admin.initializeApp({
-//   credential: admin.credential.cert(credentials),
-//   databaseURL: env.databaseUrl
-// });
-
-const typeDefs = gql`
-  type Movie {
-    title: String
-    imdb: String
-  }
-  type Query {
-    movies: [Movie]
-  }
-`;
-
-const resolvers = {
-    Query: {
-      movies: () =>
-        admin
-          .database()
-          .ref("movies")
-          .once("value")
-          .then((snap: { val: () => any; }) => snap.val())
-          .then(((val: { [x: string]: any; }) => Object.keys(val).map(key => val[key])))
-    }
-  };
+initDb();
 
 const app = express();
-const server = new ApolloServer({ typeDefs, resolvers });
-server.applyMiddleware({ app, path: "/", cors: true });
+
 exports.graphql = https.onRequest(app);
+
+async function bootstrap(){
+  
+  const schema = await buildSchema({
+    resolvers: [MovieResolver]
+  });
+
+  const server = new ApolloServer({
+    schema,
+  });
+
+  server.applyMiddleware({ app, path: "/", cors: false });
+} 
+
+bootstrap().catch(reason => console.log(reason));
