@@ -1,8 +1,9 @@
 import { Movie } from "../schemas/movie";
 import admin = require("firebase-admin");
-import { IMovieService } from "./services.interfaces";
+import { Service } from "typedi";
 
-export class MovieService implements IMovieService {
+@Service()
+export class MovieService {
 
     movieDb: admin.database.Reference;
 

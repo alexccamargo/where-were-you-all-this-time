@@ -21,7 +21,8 @@
     "firebase-functions": "^3.3.0",
     "graphql": "^14.6.0",
     "reflect-metadata": "^0.1.13",
-    "type-graphql": "^0.17.6"
+    "type-graphql": "^0.17.6",
+    "typedi": "^0.8.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.6",
