@@ -10,7 +10,7 @@ import admin from "firebase-admin";
 
 function initDb () {
   admin.initializeApp();
-              
+
   // const credentials = require('../../../firebase-credential.json');
   // const env = require('../../../env.json');
   
@@ -26,8 +26,8 @@ const app = express();
 
 exports.graphql = https.onRequest(app);
 
-async function bootstrap(){
-  
+async function bootstrap() {
+
   const schema = await buildSchema({
     resolvers: [MovieResolver]
   });
@@ -37,6 +37,6 @@ async function bootstrap(){
   });
 
   server.applyMiddleware({ app, path: "/", cors: false });
-} 
+}
 
 bootstrap().catch(reason => console.log(reason));

@@ -1,14 +1,17 @@
 import { Movie } from "../schemas/movie";
 import admin = require("firebase-admin");
+import { IMovieService } from "./services.interfaces";
 
-export class MovieService {
+export class MovieService implements IMovieService {
 
-    static get movieDb() {
-        return admin.database().ref("movies");
+    movieDb: admin.database.Reference;
+
+    constructor() {
+        this.movieDb = admin.database().ref("movies");
     }
 
-    static async getMovies(): Promise<Movie[]> {
-        const data = await MovieService.movieDb.once("value");
+    async getMovies(): Promise<Movie[]> {
+        const data = await this.movieDb.once("value");
         return data.val();
     }
 }
