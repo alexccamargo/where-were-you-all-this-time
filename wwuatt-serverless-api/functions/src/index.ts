@@ -9,6 +9,7 @@ import { Container } from "typedi";
 import { MovieResolver } from "./resolver/movie.resolver";
 
 import admin from "firebase-admin";
+import { GenreResolver } from "./resolver/genre.resolver";
 
 function initDb () {
   admin.initializeApp();
@@ -31,7 +32,7 @@ exports.graphql = https.onRequest(app);
 async function bootstrap() {
 
   const schema = await buildSchema({
-    resolvers: [MovieResolver],
+    resolvers: [MovieResolver, GenreResolver],
     container: Container,
   });
 

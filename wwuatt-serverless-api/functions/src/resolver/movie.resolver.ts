@@ -9,6 +9,7 @@ export class MovieResolver {
 
   @Query(() => [Movie])
   async movies() {
-    return this.movieService.getMovies();
+    const movies = await this.movieService.getMovies();
+    return movies.map(m => new Movie(m));
   }
 }

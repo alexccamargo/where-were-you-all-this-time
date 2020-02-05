@@ -1,14 +1,17 @@
 import { ObjectType, Field } from "type-graphql";
+import { Genre } from "./genre";
 
 @ObjectType()
 export class Movie {
 
-    constructor(title: string) {
-        this.title= title;
+    constructor(movie: Movie) {
+        this.title = movie.title;
+        this.genres = movie.genres || [];
     }
 
     @Field(() => String)
     title: string;
-    
-    rate?: number;
+
+    @Field(() => [Genre])
+    genres: Genre[] = [];
 }
