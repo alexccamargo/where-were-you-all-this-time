@@ -12,5 +12,5 @@ export class Genre {
     id: string;
 
     @Field(() => String)
-    title: string;
+    title?: string;
 }

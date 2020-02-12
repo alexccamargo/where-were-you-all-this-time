@@ -1,34 +1,28 @@
-import admin = require("firebase-admin");
 import { Service } from "typedi";
 import { Genre } from "../schemas/genre";
 import { AddGenreInput } from "../schemas/genre.input";
+import { DbService } from "./dbService";
 
 @Service()
 export class GenreService {
 
-    db: admin.database.Database;
-
-    constructor() {
-        this.db = admin.database();
-    }
+    constructor(private readonly dbService: DbService) { }
 
     async getGenres(): Promise<Genre[]> {
-        const data = await this.db.ref("genres").once("value");
-        const result = Object.keys(data.val()).map(key => data.val()[key]);
-        return result;
+        return await this.dbService.get("genres");
+    }
+
+    async getGenresByIds(ids?: string[]): Promise<Genre[]> {
+        if (!ids) return [];
+        const genres = await this.getGenres();
+        return genres.filter(x => ids.includes(x.id));
     }
 
     async getGenre(id: string) {
-        const data = await this.db.ref(`genres/${id}`).once("value");
-        return data.val();
+        return await this.dbService.getById("genres", id);
     }
 
     async addGenre(genreInput: AddGenreInput): Promise<Genre> {
-        const newEntry = await this.db.ref("genres").push();
-        const id =  newEntry.key || "";
-        if (!id) throw new Error("Error while pushing to array");
-        const newGenre = { id, title: genreInput.title }
-        await newEntry.set(newGenre);
-        return Promise.resolve(newGenre);
+        return this.dbService.add("genres", genreInput);
     }
 }

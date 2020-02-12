@@ -14,8 +14,8 @@ import { GenreResolver } from "./resolver/genre.resolver";
 function initDb () {
   admin.initializeApp();
 
-  // const credentials = require('../../../firebase-credential.json');
-  // const env = require('../../../env.json');
+  // const credentials = require('../../../../wwuatt-config/firebase-credential.json');
+  // const env = require('../../../../wwuatt-config/env.json');
   
   // admin.initializeApp({
   //     credential: admin.credential.cert(credentials),
