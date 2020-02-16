@@ -40,7 +40,7 @@ async function bootstrap() {
     schema,
   });
 
-  server.applyMiddleware({ app, path: "/", cors: false });
+  server.applyMiddleware({ app, path: "/", cors: true });
 }
 
 bootstrap().catch(reason => console.log(reason));
