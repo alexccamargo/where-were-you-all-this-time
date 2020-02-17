@@ -1,5 +1,9 @@
 <template>
-  <div>{{JSON.stringify(movies || {title: "nothing yet"})}}</div>
+<div style="border: 1px solid gray; margin: auto; width: 500px;padding:16px">
+  <div v-for="(movie, i) in movies" :key="i">
+    <div>{{ movie.title }} - {{ (movie.genres || []).map(g => g.title).join(", ") }}</div>
+  </div>
+</div>
 </template>
 
 <script lang="ts">
@@ -14,6 +18,9 @@ import gql from 'graphql-tag';
     movies: gql`query {
         movies {
           title
+          genres {
+            title
+          }
         }
       }`,
   },

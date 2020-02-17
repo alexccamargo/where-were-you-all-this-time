@@ -11,19 +11,22 @@ import { MovieResolver } from "./resolver/movie.resolver";
 import admin from "firebase-admin";
 import { GenreResolver } from "./resolver/genre.resolver";
 
-function initDb () {
-  admin.initializeApp();
+function initDb (env: String) {
+  if(env === 'PROD') {
+    admin.initializeApp();
+  } else {
+    const credentials = require('../../../../wwuatt-config/firebase-credential.json');
+    const devConfig = require('../../../../wwuatt-config/env.json');
+    
+    admin.initializeApp({
+        credential: admin.credential.cert(credentials),
+        databaseURL: devConfig.databaseUrl
+    });
+  }
 
-  // const credentials = require('../../../../wwuatt-config/firebase-credential.json');
-  // const env = require('../../../../wwuatt-config/env.json');
-  
-  // admin.initializeApp({
-  //     credential: admin.credential.cert(credentials),
-  //     databaseURL: env.databaseUrl
-  // });
 };
 
-initDb();
+initDb(process.env.ENV_NAME || 'PROD');
 
 const app = express();
 
