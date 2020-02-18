@@ -8,7 +8,7 @@ import store from './store';
 import vuetify from './plugins/vuetify';
 
 const apolloClient = new ApolloClient<{}>({
-  uri: 'https://wwuatt-api-server/graphql',
+  uri: process.env.VUE_APP_SERVICE_URL,
 });
 
 const apolloProvider = new VueApollo({
