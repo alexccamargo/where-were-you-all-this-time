@@ -1,6 +1,7 @@
 <template>
   <v-container>
-    <div>It should be here</div>
+    <v-select v-model="$i18n.locale" :items="langs"></v-select>
+    <div>{{ $t('test-message') }}</div>
     <div v-for="(movie, i) in movies" :key="i">
       <div>{{ movie.title }} - {{ (movie.genres || []).map(g => g.title).join(", ") }}</div>
     </div>
@@ -118,6 +119,8 @@ export default class HelloWorld extends Vue {
   @Prop() private msg!: string;
 
   @Prop() private age!: Number;
+
+  langs = ['pt', 'en'];
 
   ecosystem = [
     {

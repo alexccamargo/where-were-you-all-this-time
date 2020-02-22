@@ -6,6 +6,7 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import vuetify from './plugins/vuetify';
+import i18n from './i18n';
 
 const apolloClient = new ApolloClient<{}>({
   uri: process.env.VUE_APP_SERVICE_URL,
@@ -23,5 +24,6 @@ new Vue({
   store,
   apolloProvider,
   vuetify,
+  i18n,
   render: h => h(App),
 }).$mount('#app');
