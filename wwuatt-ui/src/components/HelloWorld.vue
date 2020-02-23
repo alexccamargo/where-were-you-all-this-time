@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <v-btn @click="login()">Login</v-btn>
     <v-select v-model="$i18n.locale" :items="langs"></v-select>
     <div>{{ $t('test-message') }}</div>
     <div v-for="(movie, i) in movies" :key="i">
@@ -121,6 +122,22 @@ export default class HelloWorld extends Vue {
   @Prop() private age!: Number;
 
   langs = ['pt', 'en'];
+
+  $gAuth: any;
+
+  async login() {
+    const token = await this.$gAuth.getAuthCode();
+    console.log(token);
+    // $gAuth
+    //   .getAuthCode()
+    //   .then(authCode => {
+    //     //on success
+    //     console.log("authCode", authCode);
+    //   })
+    //   .catch(error => {
+    //     //on fail do something
+    //   });
+  }
 
   ecosystem = [
     {
