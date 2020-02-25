@@ -1,6 +1,7 @@
 <template>
   <v-container>
     <v-btn @click="login()">Login</v-btn>
+    <div>{{token}}</div>
     <v-select v-model="$i18n.locale" :items="langs"></v-select>
     <div>{{ $t('test-message') }}</div>
     <div v-for="(movie, i) in movies" :key="i">
@@ -125,8 +126,11 @@ export default class HelloWorld extends Vue {
 
   $gAuth: any;
 
+  token = "LALALA";
+
   async login() {
     const token = await this.$gAuth.getAuthCode();
+    this.token = token;
     console.log(token);
     // $gAuth
     //   .getAuthCode()

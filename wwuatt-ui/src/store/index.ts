@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 import GenreModule from './genre.store';
+import AuthModule from './auth.store';
 
 Vue.use(Vuex);
 
@@ -17,6 +18,7 @@ export default new Vuex.Store({
   actions: {
   },
   modules: {
+    AuthModule,
     GenreModule,
   },
 });

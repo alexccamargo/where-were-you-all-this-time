@@ -20,6 +20,14 @@ export class DbService {
         return data.val();
     }
 
+    async find(refName: string, value: string, field: string) {
+        const data = await this.db.ref(`${refName}`).equalTo(value).once("value");
+        // const data = await this.db.ref(`${refName}`).child.child("email").once("value");
+
+        console.log(data.val())
+        return data.val();
+    }
+
     async add(refName: string, data: any): Promise<any> {
         const newEntry = await this.db.ref(refName).push();
         const id =  newEntry.key || "";
@@ -27,5 +35,10 @@ export class DbService {
         const newData = { id, ...data }
         await newEntry.set(newData);
         return Promise.resolve(newData);
+    }
+
+    async save(refName: string, id: string, data: any): Promise<any> {
+        await this.db.ref(`${refName}/${id}`).set(data);
+        return Promise.resolve(data);
     }
 }

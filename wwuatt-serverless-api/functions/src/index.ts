@@ -10,6 +10,7 @@ import { MovieResolver } from "./resolver/movie.resolver";
 
 import admin from "firebase-admin";
 import { GenreResolver } from "./resolver/genre.resolver";
+import { AuthResolver } from "./resolver/auth.resolver";
 
 function initDb (env: String) {
   if(env === 'PROD') {
@@ -35,7 +36,7 @@ exports.graphql = https.onRequest(app);
 async function bootstrap() {
 
   const schema = await buildSchema({
-    resolvers: [MovieResolver, GenreResolver],
+    resolvers: [MovieResolver, GenreResolver, AuthResolver],
     container: Container,
   });
 
